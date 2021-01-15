@@ -18,7 +18,7 @@ def login():
         post_data = request.get_json()
         number = post_data.get('account')
         code = post_data.get('password')
-        con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+        con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                               charset='utf8')
         cur = con.cursor()
         sqlSearch1 = "select * from student where SID=%s"
@@ -37,7 +37,7 @@ def login():
                     cur.close()
                     con.close()
                     return jsonify({"who": '1', "success": '0', })
-        con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+        con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                               charset='utf8')
         cur = con.cursor()
         sqlSearch2 = "select * from administrator where DID=%s"
@@ -64,7 +64,7 @@ def StudentChangeCode():
     new = post_data.get('new')
     old = post_data.get('old')
     sid = post_data.get('sid')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from student where SID = %s and CODE=%s "
@@ -86,7 +86,7 @@ def StudentChangeCode():
 def StudentDeleteDate():
     post_data = request.get_json()
     sid = post_data.get('sid')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from class where CID=%s"
@@ -113,7 +113,7 @@ def StudentSearchRoom():
     week = post_data.get('week')
     day = post_data.get('day')
     section = post_data.get('section')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     if day == '1':
@@ -233,7 +233,7 @@ def StudentDateRoom():
     section = post_data.get('section')
     week = post_data.get('week')
 
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from class where CID = %s "
@@ -339,7 +339,7 @@ def StudentSearchClass():
     cname = post_data.get('cname')
     CLASSES = []
 
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select  * from class where CNAME like '%%%%%s%%%%' and CNAME<>'预约' order by CID "
@@ -554,7 +554,7 @@ def StudentSearchTeacher():
     tname = post_data.get('tname')
     CLASSES = []
 
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select  * from class where TEACHER like '%%%%%s%%%%' and CNAME<>'预约' order by CID "
@@ -768,7 +768,7 @@ def AdminChangeCode():
     new = post_data.get('new')
     old = post_data.get('old')
     did = post_data.get('did')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     s = "select * from administrator where DID = %s and DCODE=%s "
@@ -816,7 +816,7 @@ def AdminInputClass():
             }
         )
     else:
-        con = pymysql.connect(host='localhost', user='admin', password='000000', database='roomSystem',
+        con = pymysql.connect(host='localhost', user='admin', password='000000', database='room',
                               charset='utf8')
         cur = con.cursor()
 
@@ -887,7 +887,7 @@ def AdminInputClass():
 def AdminDeleteDate():
     post_data = request.get_json()
     week = post_data.get('week')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from class where END<%s and END=START"
@@ -920,7 +920,7 @@ def AdminDeleteClass():
     post_data = request.get_json()
     cid = post_data.get('cid')
     cname = post_data.get('cname')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from class where CID=%s and CNAME=%s"
@@ -953,7 +953,7 @@ def AdminInputStudent():
     post_data = request.get_json()
     sid = post_data.get('sid')
     sname = post_data.get('sname')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from student where SID = %s "
@@ -985,7 +985,7 @@ def AdminInputStudent():
 def AdminDeleteStudent():
     post_data = request.get_json()
     sid = post_data.get('sid')
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sqlSearch = "select * from student where SID=%s"
@@ -1016,7 +1016,7 @@ def AdminDeleteStudent():
 @app.route('/api/AdminOutputAll', methods=['POST'])
 def AdminOutputAll():
     CLASSES = []
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sql = "select * from class order by CID"
@@ -1222,7 +1222,7 @@ def AdminOutputAll():
 @app.route('/api/AdminOutputAllStudents', methods=['POST'])
 def AdminOutputAllStudents():
     STUDENT=[]
-    con = pymysql.connect(host='localhost', user='root', password='000000', database='roomSystem',
+    con = pymysql.connect(host='localhost', user='root', password='000000', database='room',
                           charset='utf8')
     cur = con.cursor()
     sql = "select * from student"
